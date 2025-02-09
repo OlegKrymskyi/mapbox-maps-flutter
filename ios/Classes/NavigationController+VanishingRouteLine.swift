@@ -80,7 +80,7 @@ extension NavigationController {
     }
 
     /// Find and cache the index of the upcoming [RouteLineDistancesIndex].
-    func updateUpcomingRoutePointIndex(routeProgress: RouteProgress) {
+    func updateUpcomingRoutePointIndex(routeProgress: MapboxNavigationCore.RouteProgress) {
         guard let completeRoutePoints = routePoints,
               completeRoutePoints.nestedList.indices.contains(routeProgress.legIndex)
         else {

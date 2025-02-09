@@ -1,5 +1,6 @@
 import Foundation
 import MapboxMaps
+import MapboxNavigationCore
 
 /// A store for ``MapFeature``s.
 ///

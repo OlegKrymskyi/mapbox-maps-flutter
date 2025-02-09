@@ -4,7 +4,7 @@ import MapboxMaps
 import enum SwiftUI.ColorScheme
 import MapboxNavigationCore
 
-extension RouteProgress {
+extension MapboxNavigationCore.RouteProgress {
     func intersectionAnnotationsMapFeatures(
         ids: FeatureIds.IntersectionAnnotation,
         customizedLayerProvider: CustomizedLayerProvider

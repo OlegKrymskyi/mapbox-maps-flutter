@@ -7,7 +7,7 @@ extension MapboxMap {
             do {
                 try addImageToMap(self)
             } catch {
-                Log.error("Failed to add image (id: \(id)) to style with error \(error)", category: .navigationUI)
+                //Log.error("Failed to add image (id: \(id)) to style with error \(error)", category: .navigationUI)
             }
         }
     }
@@ -32,7 +32,7 @@ extension MapboxMap {
                 )
             }
         } catch {
-            Log.error("Failed to update route line gradient with error: \(error)", category: .navigationUI)
+            //Log.error("Failed to update route line gradient with error: \(error)", category: .navigationUI)
         }
     }
 }

@@ -5,6 +5,7 @@ import MapboxNavigationNative
 import enum SwiftUI.ColorScheme
 import UIKit
 import Foundation
+import MapboxNavigationCore
 
 extension NavigationRoutes {
     func routeAlertsAnnotationsMapFeatures(

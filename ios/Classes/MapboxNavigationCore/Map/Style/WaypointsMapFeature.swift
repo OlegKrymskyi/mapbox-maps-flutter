@@ -51,7 +51,7 @@ extension Route {
                 var properties: [String: JSONValue] = [:]
                 properties["waypointCompleted"] = .boolean(waypointIndex <= legIndex)
                 properties["waipointIconImage"] = waypointIndex > 0 && waypointIndex < waypoints.count - 1
-                    ? .string(NavigationMapView.ImageIdentifier.midpointMarkerImage)
+                    ? .string(NavigationController.ImageIdentifier.midpointMarkerImage)
                     : nil
                 feature.properties = properties
 
@@ -61,7 +61,7 @@ extension Route {
     }
 
     private func registerIntermediateWaypointImage(in mapView: MapView) {
-        let intermediateWaypointImageId = NavigationMapView.ImageIdentifier.midpointMarkerImage
+        let intermediateWaypointImageId = NavigationController.ImageIdentifier.midpointMarkerImage
         mapView.mapboxMap.provisionImage(id: intermediateWaypointImageId) {
             try $0.addImage(
                 UIImage.midpointMarkerImage,
