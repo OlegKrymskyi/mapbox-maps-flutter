@@ -107,16 +107,16 @@ class NavigatorExampleState extends State<NavigatorExample>
     await Permission.location.request();
     print("Permissions requested");
 
-    //final ByteData bytes = await rootBundle.load('assets/puck_icon.png');
-    //final Uint8List list = bytes.buffer.asUint8List();
-    // await mapboxMap.location.updateSettings(LocationComponentSettings(
-    //     enabled: true,
-    //     puckBearingEnabled: true));
+    final ByteData bytes = await rootBundle.load('assets/puck_icon.png');
+    final Uint8List list = bytes.buffer.asUint8List();
+    await mapboxMap.location.updateSettings(LocationComponentSettings(
+        enabled: true,
+        puckBearingEnabled: true));
 
 
     print("Puck enabled");
-    //var myCoordinate = await mapboxMap.style.getPuckPosition();
-    //if (myCoordinate == null) {
+    var myCoordinate = await mapboxMap.style.getPuckPosition();
+    if (myCoordinate == null) {
       print("Puck location was not defined");
       var lastLocation = await mapboxMap.navigation.lastLocation();
       if (lastLocation == null) {
@@ -124,8 +124,8 @@ class NavigatorExampleState extends State<NavigatorExample>
         return;
       }
 
-      var myCoordinate = Position(lastLocation.longitude!, lastLocation.latitude!);
-    //}
+      myCoordinate = Position(lastLocation.longitude!, lastLocation.latitude!);
+    }
 
     await mapboxMap
         .setCamera(CameraOptions(center: Point(coordinates: myCoordinate)));

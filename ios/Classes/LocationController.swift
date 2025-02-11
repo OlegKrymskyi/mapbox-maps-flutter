@@ -8,6 +8,12 @@ final class LocationController: _LocationComponentSettingsInterface {
             mapView.location.options = try mapView.location.options.fromFLT_SETTINGSLocationComponentSettings(
                 settings: settings,
                 useDefaultPuck2DIfNeeded: useDefaultPuck2DIfNeeded)
+            if(settings.enabled == true) {
+                locationClient.startUpdatingHeading()
+                locationClient.startUpdatingLocation()
+                locationClient.sendCurrentLocation()
+                locationClient.sendCurrentHeading()
+            }
         } catch let settingsError {
             throw FlutterError(code: "0", message: settingsError.localizedDescription, details: settingsError)
         }
@@ -18,9 +24,11 @@ final class LocationController: _LocationComponentSettingsInterface {
     }
 
     private let mapView: MapView
+    private let locationClient: CustomLocationClient
 
-    init(withMapView mapView: MapView) {
+    init(withMapView mapView: MapView, locationClient: CustomLocationClient) {
         self.mapView = mapView
+        self.locationClient = locationClient
     }
 }
 

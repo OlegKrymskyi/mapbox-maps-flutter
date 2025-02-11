@@ -43,6 +43,7 @@ final class NavigationController: NSObject, NavigationInterface {
             if(routeProgress == nil){ return }
             self.onNavigationListener?.onRouteProgress(routeProgress: routeProgress!.routeProgress.toFLTRouteProgress()) { _ in }
         }
+        core.tripSession().restoreTrackingLocationIfNeeded()
     }
 
     func startFreeDrive() {

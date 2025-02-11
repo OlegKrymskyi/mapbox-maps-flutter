@@ -21,6 +21,8 @@ final class MapboxMapController: NSObject, FlutterPlatformView {
     private static var navigationProvider: MapboxNavigationProvider?
 
     private var navigationMapView: NavigationMapView!
+    
+    private let locationClient: CustomLocationClient;
 
     func view() -> UIView {
         return navigationMapView
@@ -37,13 +39,14 @@ final class MapboxMapController: NSObject, FlutterPlatformView {
         binaryMessenger = SuffixBinaryMessenger(messenger: registrar.messenger(), suffix: String(channelSuffix))
         _ = SettingsServiceFactory.getInstanceFor(.nonPersistent)
             .set(key: "com.mapbox.common.telemetry.internal.custom_user_agent_fragment", value: "FlutterPlugin/\(pluginVersion)")
+        locationClient = CustomLocationClient()
         
         if(MapboxMapController.navigationProvider == nil)
         {
             MapboxMapController.navigationProvider = MapboxNavigationProvider(coreConfig: CoreConfig(
                 credentials: .init(navigation: ApiConfiguration(accessToken: MapboxOptions.accessToken),
                                    map: ApiConfiguration(accessToken: MapboxOptions.accessToken)), // You can pass a custom token if you need to,
-                locationSource: .live,
+                locationSource: .custom(locationClient.getClient()),
                 disableBackgroundTrackingLocation: false
            ))
         }
@@ -62,7 +65,6 @@ final class MapboxMapController: NSObject, FlutterPlatformView {
         )
         
         navigationMapView.viewportPadding = UIEdgeInsets(top: 20, left: 20, bottom: 80, right: 20)
-        navigationMapView.puckType = .puck2D(.navigationDefault)
         navigationMapView.translatesAutoresizingMaskIntoConstraints = true
 
         self.navigationMapView = navigationMapView
@@ -96,7 +98,7 @@ final class MapboxMapController: NSObject, FlutterPlatformView {
         let animationController = AnimationController(withMapView: mapView)
         _AnimationManagerSetup.setUp(binaryMessenger: binaryMessenger.messenger, api: animationController, messageChannelSuffix: binaryMessenger.suffix)
 
-        let locationController = LocationController(withMapView: mapView)
+        let locationController = LocationController(withMapView: mapView, locationClient: locationClient)
         _LocationComponentSettingsInterfaceSetup.setUp(binaryMessenger: binaryMessenger.messenger, api: locationController, messageChannelSuffix: binaryMessenger.suffix)
 
         gesturesController = GesturesController(withMapView: mapView)
